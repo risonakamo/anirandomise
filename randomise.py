@@ -51,7 +51,16 @@ def main():
 
 def logVid(filename,logFile):
     with open(logFile,"a+") as logfile:
-        logfile.write("{} {}\n".format(datetime.datetime.now().replace(microsecond=0),filename));
+        line="";
+        logfile.seek(0);
+        for x in logfile:
+            line=x;
+
+        newline="";
+        if len(line)>0 and line[-1]!="\n":
+            newline="\n";
+
+        logfile.write("{}{} {}\n".format(newline,datetime.datetime.now().replace(microsecond=0),filename));
 
 #supposed to be function that compares strings
 #and gives some percent on their similarities,
