@@ -4,6 +4,7 @@ import os;
 import sys;
 import re;
 import random;
+import datetime;
 
 class vidArray:
     def __init__(self):
@@ -11,17 +12,11 @@ class vidArray:
         self.files=set();
 
     def add(self,vid,filename):
-        if (vid=="randomisepy"):
-            return;
         if vid not in self.vids:
             self.vids.add(vid);
             self.files.add(filename);
 
-    def write(self):
-        outfile=open("vidlist.txt","w");
-        for x in self.vids:
-            outfile.write(x);
-
+    #print filenames of loaded vids
     def printVids(self):
         for x in self.vids:
             print(x);
@@ -32,9 +27,11 @@ class vidArray:
 def main():
     files=os.scandir();
     v=vidArray();
+    thisFile=os.path.basename(__file__); #this files filename with extension
+    logFile=os.path.splitext(thisFile)[0]+".log"; #log file name
 
     for x in files:
-        if x.is_dir() or x.name=="randomise.py":
+        if x.is_dir() or x.name==thisFile or x.name==logFile:
             continue;
         name=x.name;
         # cleanName=(re.sub("(\[([^\]]*)\])|(.mkv)|([^a-zA-z])|(.mp4)","",name)).lower();
@@ -45,12 +42,20 @@ def main():
 
     pick=v.pick();
     print(">{}".format(pick));
+    logVid(pick,logFile);
 
     if len(sys.argv)>1 and sys.argv[1]=="test":
         return;
 
     os.system('start "" "{}" & pause'.format(pick));
 
+def logVid(filename,logFile):
+    with open(logFile,"a+") as logfile:
+        logfile.write("{} {}\n".format(datetime.datetime.now().replace(microsecond=0),filename));
+
+#supposed to be function that compares strings
+#and gives some percent on their similarities,
+#but not really useful and doesnt really work
 def chanceWord(s):
     if len(s)==0:
         return 0;
