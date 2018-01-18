@@ -50,7 +50,7 @@ def main():
     os.system('start "" "{}" & pause'.format(pick));
 
 def logVid(filename,logFile):
-    with open(logFile,"a+") as logfile:
+    with open(logFile,"a+",encoding="utf8") as logfile:
         line="";
         logfile.seek(0);
         for x in logfile:
