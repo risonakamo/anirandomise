@@ -7,8 +7,12 @@ import random;
 import datetime;
 
 # -- settable variables --
+#there's no error checking!!! make sure directories exist
 _log=1; #1 to make log file, 0 to not
 _loadDir="./vids"; #directory to launch vids from (make sure theres no slash at the end)
+
+_promptMove=1; #whether to prompt to move the chosen video
+_moveDir="./completed"; #folder to move to
 
 class vidArray:
     def __init__(self):
@@ -53,7 +57,17 @@ def main():
     if len(sys.argv)>1 and sys.argv[1]=="--test":
         return;
 
-    os.system('start "" "{}/{}" & pause'.format(_loadDir,pick));
+    os.system('start "" "{}/{}"'.format(_loadDir,pick));
+
+    if _promptMove:
+        print("enter y to move video to {}, enter to cancel: ".format(_moveDir),end="");
+        choice=input();
+
+        if choice=="y":
+            os.rename("{}/{}".format(_loadDir,pick),"{}/{}".format(_moveDir,pick));
+
+    else:
+        os.system("pause");
 
 def logVid(filename,logFile):
     with open(logFile,"a+",encoding="utf8") as logfile:
