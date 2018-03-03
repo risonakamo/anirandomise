@@ -1,10 +1,14 @@
-#run with command argument test to run without launching video program
+#run with command argument "--test" to run without launching video program
 
 import os;
 import sys;
 import re;
 import random;
 import datetime;
+
+# -- settable variables --
+_log=1; #1 to make log file, 0 to not
+_loadDir="./vids"; #directory to launch vids from (make sure theres no slash at the end)
 
 class vidArray:
     def __init__(self):
@@ -25,7 +29,7 @@ class vidArray:
         return random.choice(list(self.files));
 
 def main():
-    files=os.scandir();
+    files=os.scandir(_loadDir);
     v=vidArray();
     thisFile=os.path.basename(__file__); #this files filename with extension
     logFile=os.path.splitext(thisFile)[0]+".log"; #log file name
@@ -42,12 +46,14 @@ def main():
 
     pick=v.pick();
     print(">{}".format(pick));
-    logVid(pick,logFile);
 
-    if len(sys.argv)>1 and sys.argv[1]=="test":
+    if _log:
+        logVid(pick,logFile);
+
+    if len(sys.argv)>1 and sys.argv[1]=="--test":
         return;
 
-    os.system('start "" "{}" & pause'.format(pick));
+    os.system('start "" "{}/{}" & pause'.format(_loadDir,pick));
 
 def logVid(filename,logFile):
     with open(logFile,"a+",encoding="utf8") as logfile:
