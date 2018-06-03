@@ -38,6 +38,7 @@ def main():
     thisFile=os.path.basename(__file__); #this files filename with extension
     logFile=os.path.splitext(thisFile)[0]+".log"; #log file name
 
+    dircount=0;
     for x in files:
         if x.is_dir() or x.name==thisFile or x.name==logFile:
             continue;
@@ -45,6 +46,12 @@ def main():
         # cleanName=(re.sub("(\[([^\]]*)\])|(.mkv)|([^a-zA-z])|(.mp4)","",name)).lower();
         cleanName=(re.sub("(\..*$)|((\[|\().*?(\]|\)))|([^a-zA-Z])","",name)).lower();
         v.add(cleanName,name);
+        dircount+=1;
+
+    if dircount==0:
+        print("folder was empty");
+        os.system("pause");
+        return;
 
     v.printVids();
 
