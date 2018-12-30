@@ -1,4 +1,5 @@
 #run with command argument "--test" to run without launching video program
+#--check to display only parsed filenames
 
 import os;
 import sys;
@@ -54,6 +55,10 @@ def main():
         return;
 
     v.printVids();
+
+    if len(sys.argv)>1 and sys.argv[1]=="--check":
+        os.system("pause");
+        return;
 
     pick=v.pick();
     print(">{}".format(pick));

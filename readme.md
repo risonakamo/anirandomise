@@ -13,3 +13,9 @@
 - the script will now create a log file named after itself except with a .log file extension
 - the script ignores files that have its name, so the log will not be opened by the script
 - the log file will detail what file choices were made
+
+### command arguments
+- --test: only output, do not run the file. will perform logging actions, if enabled.
+- --check: display output without making a pick. As such, no logging, or file-running, will occur.
+
+currently, only the first argument will activate (it is not possible for the two available arguments to run together, after all)
