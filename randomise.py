@@ -12,7 +12,7 @@ _log=1; #1 to make log file, 0 to not
 _loadDir="./vids"; #directory to launch vids from (make sure theres no slash at the end)
 
 _promptMove=1; #whether to prompt to move the chosen video
-_moveDir="./completed"; #folder to move to
+_moveDir="./completed"; #folder to move to (make sure theres no slash at the end)
 
 class vidArray:
     def __init__(self):
